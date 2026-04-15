@@ -4,20 +4,30 @@ import { ArrowLeft, UserCircle, Mail } from 'lucide-react';
 import Button from '../components/Button';
 import Input from '../components/Input';
 import { useOnboarding } from '../context/OnboardingContext';
+import { useProfile } from '../context/ProfileContext';
 
 export default function Onboarding3() {
   const navigate = useNavigate();
   const { data, update } = useOnboarding();
+  const { update: updateProfile } = useProfile();
   const [name, setName] = useState(data.name || '');
   const [email, setEmail] = useState(data.email || '');
   const [loading, setLoading] = useState(false);
 
   const handleFinish = () => {
     update({ name, email });
+    // Sync into ProfileContext
+    updateProfile({
+      name,
+      email,
+      phone: data.phone || '',
+      gender: data.gender || 'Male',
+      conditions: data.conditions || [],
+    });
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      navigate('/welcome');
+      navigate('/home');
     }, 900);
   };
 
@@ -67,7 +77,7 @@ export default function Onboarding3() {
         <Button onClick={handleFinish} loading={loading} disabled={!name}>
           Finish Setup ✓
         </Button>
-        <Button variant="ghost" onClick={() => navigate('/welcome')}>
+        <Button variant="ghost" onClick={() => navigate('/home')}>
           Skip for now
         </Button>
       </div>

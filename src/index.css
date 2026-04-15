@@ -479,3 +479,13 @@ body {
 .gender-card:active {
   transform: scale(0.93);
 }
+
+/* Hide scrollbars globally */
+* {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+*::-webkit-scrollbar {
+  display: none;
+}

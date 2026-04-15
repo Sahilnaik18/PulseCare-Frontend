@@ -1,44 +1,77 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import pulsemateLogo from '../assets/pulsemate.png';
 
 export default function Splash() {
   const navigate = useNavigate();
+  const [showTagline, setShowTagline] = useState(false);
 
   useEffect(() => {
-    const t = setTimeout(() => navigate('/intro'), 2800);
-    return () => clearTimeout(t);
+    // Show tagline after logo settles
+    const t1 = setTimeout(() => setShowTagline(true), 700);
+    const t2 = setTimeout(() => navigate('/intro'), 3000);
+    return () => { clearTimeout(t1); clearTimeout(t2); };
   }, [navigate]);
 
   return (
     <div
-      className="flex flex-col items-center justify-center min-h-screen px-8"
       style={{
-        background: 'linear-gradient(160deg, #2563EB 0%, #60a5fa 50%, #f9fafb 100%)',
+        minHeight: '100svh',
+        background: 'linear-gradient(180deg, #6B7FE3 0%, #3D52D5 100%)',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 0,
       }}
     >
-      {/* Logo */}
-      <div className="fade-in-up flex flex-col items-center gap-4">
-        <div className="w-20 h-20 rounded-3xl bg-white shadow-lg flex items-center justify-center">
-          <span className="text-4xl">🩺</span>
-        </div>
-        <div className="text-center">
-          <h1 className="text-4xl font-bold text-white tracking-tight">PulseCare</h1>
-          <p className="text-blue-100 mt-2 text-base font-medium">
-            Smart healthcare at your fingertips
-          </p>
-        </div>
+      {/* Logo — fixed size, no animation, just clean render */}
+      <img
+        src={pulsemateLogo}
+        alt="PulseMate"
+        style={{
+          width: 160,
+          height: 160,
+          objectFit: 'contain',
+          display: 'block',
+          animation: 'logoIn 0.5s ease-out forwards',
+        }}
+      />
+
+      {/* Tagline — types in character by character */}
+      <div style={{ marginTop: 20, textAlign: 'center', minHeight: 52 }}>
+        {showTagline && (
+          <>
+            <p
+              style={{
+                color: 'rgba(255,255,255,0.95)',
+                fontSize: 15,
+                fontWeight: 500,
+                fontFamily: 'Inter, sans-serif',
+                letterSpacing: '0.06em',
+                animation: 'typeIn 1.2s steps(22, end) forwards',
+                overflow: 'hidden',
+                whiteSpace: 'nowrap',
+                width: 0,
+                borderRight: '2px solid rgba(255,255,255,0.7)',
+              }}
+            >
+              Your Health. Your Mate.
+            </p>
+          </>
+        )}
       </div>
 
-      {/* Pulsing dots loader */}
-      <div className="flex gap-2 mt-16">
-        {[0, 1, 2].map((i) => (
-          <span
-            key={i}
-            className="pulse-dot w-2.5 h-2.5 rounded-full bg-white opacity-80"
-            style={{ animationDelay: `${i * 0.2}s` }}
-          />
-        ))}
-      </div>
+      <style>{`
+        @keyframes logoIn {
+          from { opacity: 0; transform: scale(0.85); }
+          to   { opacity: 1; transform: scale(1); }
+        }
+        @keyframes typeIn {
+          from { width: 0; }
+          to   { width: 200px; border-color: transparent; }
+        }
+      `}</style>
     </div>
   );
 }

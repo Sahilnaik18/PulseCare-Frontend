@@ -29,7 +29,6 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const [pageReady, setPageReady] = useState(false);
 
-  // Simulate brief skeleton on mount
   useEffect(() => {
     const t = setTimeout(() => setPageReady(true), 500);
     return () => clearTimeout(t);
@@ -43,26 +42,21 @@ export default function Login() {
     setError('');
     setLoading(true);
     update({ phone });
-    setTimeout(() => {
-      setLoading(false);
-      navigate('/otp');
-    }, 800);
+    setTimeout(() => { setLoading(false); navigate('/otp'); }, 800);
   };
 
   return (
     <div className="page-enter flex flex-col min-h-screen bg-[#F9FAFB] px-6 pt-16 safe-bottom">
-      {/* Header */}
       <div className="fade-in-up mb-10">
         <div className="w-14 h-14 rounded-2xl bg-blue-100 flex items-center justify-center mb-6">
           <span className="text-3xl">🩺</span>
         </div>
         <h1 className="text-3xl font-bold text-[#111827] leading-tight">
-          Welcome to<br />PulseCare
+          Welcome to<br />PulseMate
         </h1>
-        <p className="text-[#6B7280] mt-2 text-base">Your health, simplified.</p>
+        <p className="text-[#6B7280] mt-2 text-base">Your Health. Your Mate.</p>
       </div>
 
-      {/* Form — skeleton until ready */}
       {!pageReady ? (
         <SkeletonLoader />
       ) : (
@@ -76,31 +70,19 @@ export default function Login() {
             maxLength={10}
             placeholder="Enter 10-digit number"
             value={phone}
-            onChange={(e) => {
-              setPhone(e.target.value.replace(/\D/g, ''));
-              setError('');
-            }}
+            onChange={(e) => { setPhone(e.target.value.replace(/\D/g, '')); setError(''); }}
             error={error}
           />
-
           <Button onClick={handleContinue} loading={loading}>
             Continue with OTP
           </Button>
-
-          {/* Divider */}
           <div className="flex items-center gap-3">
             <div className="flex-1 h-px bg-[#E5E7EB]" />
             <span className="text-[#9CA3AF] text-sm font-medium">OR</span>
             <div className="flex-1 h-px bg-[#E5E7EB]" />
           </div>
-
-          {/* Google button */}
           <Button variant="secondary" onClick={() => {}}>
-            <img
-              src="https://www.svgrepo.com/show/475656/google-color.svg"
-              alt="Google"
-              className="w-5 h-5"
-            />
+            <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" className="w-5 h-5" />
             Continue with Google
           </Button>
         </div>

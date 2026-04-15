@@ -8,12 +8,9 @@ export default function Welcome() {
 
   return (
     <div className="page-enter flex flex-col items-center justify-center min-h-screen bg-[#F9FAFB] px-6 pb-10 text-center">
-      {/* Illustration placeholder */}
       <div
         className="fade-in-up w-56 h-56 rounded-3xl mb-8 flex flex-col items-center justify-center shadow-lg"
-        style={{
-          background: 'linear-gradient(135deg, #dbeafe 0%, #dcfce7 100%)',
-        }}
+        style={{ background: 'linear-gradient(135deg, #dbeafe 0%, #dcfce7 100%)' }}
       >
         <span className="text-7xl">🎉</span>
         <span className="text-5xl mt-2">🩺</span>
@@ -29,7 +26,6 @@ export default function Welcome() {
         </p>
       </div>
 
-      {/* Stats summary */}
       {(data.age || data.gender || data.conditions?.length > 0) && (
         <div
           className="fade-in-up w-full mt-8 bg-white rounded-2xl p-4 shadow-md border border-[#E5E7EB] flex gap-4 justify-around"
@@ -60,7 +56,7 @@ export default function Welcome() {
       )}
 
       <div className="w-full mt-8 fade-in-up" style={{ animationDelay: '0.35s' }}>
-        <Button onClick={() => console.log('Navigate to Home', data)}>
+        <Button onClick={() => navigate('/home')}>
           Go to Home 🏠
         </Button>
       </div>
